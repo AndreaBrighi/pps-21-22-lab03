@@ -4,3 +4,4 @@ out/
 .idea/tasks.xml
 .idea/shelf
 .scalafmt.conf
+.idea/
