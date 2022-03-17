@@ -42,16 +42,15 @@ object Streams extends App:
     @tailrec
     def drop[A](stream: Stream[A])(n: Int): Stream[A] = (stream, n) match
       case (Cons(head, tail), n) if n > 0 => drop(tail())(n - 1)
-      case (Cons(head, tail), n) => Cons(head, tail)
-      case _ => Empty()
+      case (stream, n) => stream
 
     def constant[A](c: => A): Stream[A] =
-      lazy val cons = c
-      Cons(() => c, () => constant(c))
+      lazy val con = c
+      cons( con, constant(c))
 
     def fib(): Stream[Int] =
       def _fib( next: Int, actual: Int): Stream[Int] =
-        Cons(()=>actual, ()=> _fib(next + actual, next))
+        cons(actual, _fib(next + actual, next))
       _fib( 1, 0)
 
   end Stream
